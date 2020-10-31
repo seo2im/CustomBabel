@@ -96,7 +96,7 @@ module.export = {
 		rules: [{ test : /\.js$/, use : 'babel-loader'}]
 	},
 	// This option prevent compressing js file. 
-	optimazation : { minimizer: []}
+	optimazation : { minimizer: [] }
 }
 ```
 
@@ -105,4 +105,11 @@ And copy `babel.config.js` at working directoy. `babel-loader` refer to babel co
 ```shell
 npx webpack
 ```
+</br></br>
+
+## Use babel/core ([babel#3]())
+
+'@babel/core' is core module for using babel. Import module in js, convert file directly.
+
+
 
