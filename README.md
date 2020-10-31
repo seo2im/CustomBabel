@@ -5,10 +5,11 @@
 1. Knownledge what is **babel**
 2. Knownledge what is **babel plugin**
 3. Knownledge what is **babel preset**
-
+</br></br>
 
 ## What is Babel
 **Babel is code compiler with js.** Initial babel made ES6 to ES5. This time, can make JSX, ts, code compress ... to ES5.
+</br></br>
 
 ## How to exec babel
 1. @babel/cli
@@ -19,8 +20,9 @@
 	- use core file in js code
 4. @babel/register
 	- dynamically exec when `require()` in **Node.js**
+</br></br>
 
-## Use in command line [babel#1]()
+## Use in command line : ([babel#1]())
 ```shell
 npm install @babel/core @babel/cli
 ```
@@ -67,9 +69,40 @@ command line only use like below
  	npx babel someJsFile.js
 */
 ```
+</br></br>
 
-## Use in Webpack [babel#2]()
+## Use in Webpack : ([babel#2]())
 **Webpack** is bundling architecture, build tool. If you learn about webpack, [this]().
 
+Webpack uses loaders when building output. `babel-loader` compiles **not ES5 code** to **ES5 code** when webpack running. install below
 
+```shell
+# webpack-cli is command line tool
+npm install webpack webpack-cli babel-loader
+```
+
+webpack bundling with config file `webpack.config.js`. write like below. If you want to get more explanation, [this]()
+
+```javascript
+const path = require('path');
+
+module.export = {
+	entry : './before.js',
+	output : {
+		path : path.resolve(__dirname, 'dist'),
+		filename : 'after.js'
+	},
+	module : {
+		rules: [{ test : /\.js$/, use : 'babel-loader'}]
+	},
+	// This option prevent compressing js file. 
+	optimazation : { minimizer: []}
+}
+```
+
+And copy `babel.config.js` at working directoy. `babel-loader` refer to babel configuration file. exec like below.
+
+```shell
+npx webpack
+```
 
