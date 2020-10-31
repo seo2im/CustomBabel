@@ -1,0 +1,26 @@
+{
+  "name": "custombabel",
+  "version": "1.0.0",
+  "description": "## What is Babel **Babel is code compiler with js.** Initial babel made ES6 to ES5. This time, can make JSX, ts, code compress ... to ES5.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seo2im/CustomBabel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seo2im/CustomBabel/issues"
+  },
+  "homepage": "https://github.com/seo2im/CustomBabel#readme",
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-arrow-functions": "^7.12.1",
+    "@babel/plugin-transform-template-literals": "^7.12.1",
+    "@babel/preset-react": "^7.12.1"
+  }
+}
