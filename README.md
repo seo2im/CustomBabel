@@ -86,7 +86,7 @@ webpack bundling with config file `webpack.config.js`. write like below. If you 
 ```javascript
 const path = require('path');
 
-module.export = {
+module.exports = {
 	entry : './before.js',
 	output : {
 		path : path.resolve(__dirname, 'dist'),
@@ -208,4 +208,47 @@ Environment in babel refer to `process.env.BABEL_ENV || process.env.NODE_ENV || 
 ```
 
 Above, src directory's files ars affected by arrow plugin without `code2.js`.
+</br></br>
 
+## Babel polyfill
+
+**Poliyfill** add funcs in runtime if they are not existed. For example, `Object.values` is not work in normal, but use polyfill, work it possible.</br></br>Before, babel-polyfill module standard way to apply polyfill, but now, it depeciated because of crashing & sizing. This time, use `core-js` module for polyfill.
+
+```javascript
+//in js file
+imoirt 'core-js'
+const coreTest = Object.values({a : 1});
+
+//in webpack
+module.exports = {
+	entry : ['core-js', './index.js']
+}
+```
+
+`core-js` also have problem for sizing(bundle is bigger). But import polyfill only need possible.
+
+```javascript
+import 'code-js/feature/object/values';
+```
+
+In babel, using it with `preset-env`. `preset-env` work automatically with information about environment. look below.
+
+```javascript
+const presets = [
+	[
+		'@babel/preset-env',
+		{
+			target : {
+				chrome : '40' // This is browser version, get polyfills refering this version
+			},
+			useBuiltIns : 'entry', //This only get polyfills for browser, if you use 'usage', get polyfills only using in code
+			corejs : {
+				version : 3, 
+				proposal : ture 
+			}
+		}
+	]
+];
+
+module.exports = { presets };
+```
