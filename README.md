@@ -109,7 +109,16 @@ npx webpack
 
 ## Use babel/core ([babel#3]())
 
-'@babel/core' is core module for using babel. Import module in js, convert file directly.
+`@babel/core` is core module for using babel. Import module in js, convert file directly. ref [here]()</br></br>Use core directly, better degrees of freedom. Assume that different two setting in same code like below.
 
+```javascript
+// Set 1
+const presets = ['@babel/preset-react'];
+const plugins = ['@babel/plugin-transform-template-literals'];
 
+// Set 2
+const presets = ['@babel/preset-react'];
+const plugins = ['@babel/plugin-transform-arrow-functions'];
+```
 
+If you use `loader` or `cli`, build it twice. But use `core`, effiienctly work possible.</br></br>babel compile **AST** code through 'parse-transform-generate'. In js code, AST code can be re-useable. ref [here]()</br></br>If you want know AST code, ref [here](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
