@@ -122,3 +122,90 @@ const plugins = ['@babel/plugin-transform-arrow-functions'];
 ```
 
 If you use `loader` or `cli`, build it twice. But use `core`, effiienctly work possible.</br></br>babel compile **AST** code through 'parse-transform-generate'. In js code, AST code can be re-useable. ref [here]()</br></br>If you want know AST code, ref [here](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+</br></br>
+
+## Babel Attributes ([babel#4]())
+
+There are many attributes in babel config, let's show `extended`, `env`, `overrides`.
+
+### .babelrc vs babel.config.js
+
+These two files configuration file for babel. But `babel.config.js` is global setting, `.babelrc` is local setting.
+
+```javascript
+//babel.config.js -> root directory
+const plugins = ['@babel/plugin-transform-arrow-functions']
+
+//.babelrc -> src directory
+const plugins = ['@babel/plugin-transform-template-literals'];
+```
+
+Assume that code1.js and `babel.config.js` are at root, code2.js and `.babelrc` are in root/src directory. compiling them with babel, code1 affected only 'arrow plugin' and code2 affeted both.
+
+### extended
+`exteneded` is **import** other config setting. It overwrite same setting. Look below.
+
+```javascript
+//.babelrc -> root
+{
+	"presets" : ['@babel/preset-react'],
+	"plugins" : [
+		[
+			"@babel/plugin-transform-template-literals",
+			{
+				"loose" : true //This is template plugins option, make literal with '+', not concat
+			}
+		]
+	]
+}
+//.babelrc -> root/src
+{
+	"extends" : "../.babelrc",
+	"plugins" : [		
+		"@babel/plugin-transform-template-literals",
+		"@babel/plugin-transform-arrow-functions"
+	]
+}
+```
+
+`code.js` is in src directory, compiling with babel, `code.js` affected with 'react preset' and two plugins. Template plugin's 'loose option' not work because of overwritting.
+
+### env
+
+Environment in babel refer to `process.env.BABEL_ENV || process.env.NODE_ENV || "development"`</br></br>We set 'env' option in config file, apply plugins & presets differently.
+
+```javascript
+//.babelrc
+{
+	"presets" : ["@babel/preset-react"],
+	"env" : {
+		"production" : {
+			"presets" : ["minify"] //minify compress code.
+		}
+	}
+}
+```
+`minify` affect compiling only `process.NODE_ENV == "production"`
+
+### overrides
+
+`overrides` concludes **include path** and **exclude path**. Include path is affected by overriding plugin, exclude is not.
+
+```javascript
+{
+	"preset" : ["@babel/preset-react"],
+	"plugins" : [		
+		"@babel/plugin-transform-template-literals"
+	],
+	"overrides" : [
+		{
+			"include" : "./src",
+			"exclude" : "./src/code2.js",
+			"plugins" : ["@babel/plugin-transform-arrow-functions"] 
+		}
+	]
+}
+```
+
+Above, src directory's files ars affected by arrow plugin without `code2.js`.
+

@@ -1,0 +1,1 @@
+npx babel before.js > after.js
